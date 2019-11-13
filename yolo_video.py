@@ -2,6 +2,7 @@ import sys
 import argparse
 from yolo import YOLO, detect_video
 from PIL import Image
+import pdb
 
 def detect_img(yolo):
     while True:
@@ -25,17 +26,17 @@ if __name__ == '__main__':
     Command line options
     '''
     parser.add_argument(
-        '--model', type=str,
+        '--model', type=str, default="checkpoints/trained_weights_final.h5",
         help='path to model weight file, default ' + YOLO.get_defaults("model_path")
     )
 
     parser.add_argument(
-        '--anchors', type=str,
+        '--anchors', type=str, default="model_data/yolo_anchors.txt",
         help='path to anchor definitions, default ' + YOLO.get_defaults("anchors_path")
     )
 
     parser.add_argument(
-        '--classes', type=str,
+        '--classes', type=str, default="model_data/training-usbase.names",
         help='path to class definitions, default ' + YOLO.get_defaults("classes_path")
     )
 
@@ -52,7 +53,7 @@ if __name__ == '__main__':
     Command line positional arguments -- for video detection mode
     '''
     parser.add_argument(
-        "--input", nargs='?', type=str,required=False,default='./path2your_video',
+        "--input", nargs='?', type=str,required=False,default='./training-usbase/thyroid_inna_right_v2.mp4',
         help = "Video input path"
     )
 

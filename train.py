@@ -14,9 +14,11 @@ from yolo3.utils import get_random_data
 
 
 def _main():
-    annotation_path = 'train.txt'
+    # annotation_path = 'train.txt'
+    annotation_path = 'model_data/training-usbase_train.txt'
     log_dir = 'logs/000/'
-    classes_path = 'model_data/voc_classes.txt'
+    # classes_path = 'model_data/voc_classes.txt'
+    classes_path = 'model_data/training-usbase.names'
     anchors_path = 'model_data/yolo_anchors.txt'
     class_names = get_classes(classes_path)
     num_classes = len(class_names)
@@ -24,13 +26,17 @@ def _main():
 
     input_shape = (416,416) # multiple of 32, hw
 
+    print("Launch Tensorboard with: ")
+    print("tensorboard --logdir=./%s" % (log_dir))
+
     is_tiny_version = len(anchors)==6 # default setting
-    if is_tiny_version:
-        model = create_tiny_model(input_shape, anchors, num_classes,
-            freeze_body=2, weights_path='model_data/tiny_yolo_weights.h5')
-    else:
-        model = create_model(input_shape, anchors, num_classes,
-            freeze_body=2, weights_path='model_data/yolo_weights.h5') # make sure you know what you freeze
+    # if is_tiny_version:
+    #     model = create_tiny_model(input_shape, anchors, num_classes,
+    #         freeze_body=2, weights_path='model_data/tiny_yolo_weights.h5')
+    # else:
+    #model = create_model(input_shape, anchors, num_classes, freeze_body=2, weights_path='model_data/yolo.h5') # make sure you know what you freeze
+
+    model = create_model(input_shape, anchors, num_classes, freeze_body=2, weights_path='checkpoints/ep027-loss337.100-val_loss319.958.h5')  # make sure you know what you freeze
 
     logging = TensorBoard(log_dir=log_dir)
     checkpoint = ModelCheckpoint(log_dir + 'ep{epoch:03d}-loss{loss:.3f}-val_loss{val_loss:.3f}.h5',
