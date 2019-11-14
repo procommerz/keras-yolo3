@@ -48,10 +48,9 @@ class YOLO(object):
 
         config = tf.ConfigProto()
         config.gpu_options.allow_growth = True
-        sess = tf.Session(config=config)
+        self.sess = tf.Session(config=config)
 
-        set_trace()
-
+        # set_trace()
         # self.sess = K.get_session(config=config)
         self.boxes, self.scores, self.classes = self.generate()
 
