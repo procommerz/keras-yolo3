@@ -3,6 +3,15 @@ import argparse
 from yolo import YOLO, detect_video
 from PIL import Image
 import pdb
+import keras
+import tensorflow as tf
+
+print("Script started. Keras: %s, Tensorflow: %s" % (keras.__version__, tf.__version__))
+
+# See: https://devtalk.nvidia.com/default/topic/1048627/cuda-setup-and-installation/does-the-latest-gtx-1660-model-support-cuda-/
+# config = tf.ConfigProto()
+# config.gpu_options.allow_growth = True
+# sess = tf.Session(config=config)
 
 def detect_img(yolo):
     while True:
@@ -41,7 +50,7 @@ if __name__ == '__main__':
     )
 
     parser.add_argument(
-        '--gpu_num', type=int,
+        '--gpu_num', type=int, default=1,
         help='Number of GPU to use, default ' + str(YOLO.get_defaults("gpu_num"))
     )
 
