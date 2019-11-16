@@ -35,7 +35,7 @@ if __name__ == '__main__':
     Command line options
     '''
     parser.add_argument(
-        '--model', type=str, default="checkpoints/trained_weights_final.h5",
+        '--model', type=str, default="checkpoints/v2/trained_weights_final.h5",
         help='path to model weight file, default ' + YOLO.get_defaults("model_path")
     )
 
