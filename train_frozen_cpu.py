@@ -37,7 +37,8 @@ def _main():
 
     # start_checkpoint = 'model_data/yolo.h5'
     # start_checkpoint = 'checkpoints/ep027-loss337.100-val_loss319.958.h5'
-    start_checkpoint = 'checkpoints/ep048-loss47.578-val_loss53.419.h5'
+    # start_checkpoint = 'checkpoints/ep048-loss47.578-val_loss53.419.h5'
+    start_checkpoint = 'logs/000/trained_weights_stage_1.h5'
 
     print("Will load checkpoint: %s" % (start_checkpoint))
 
