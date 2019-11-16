@@ -39,6 +39,8 @@ def _main():
     # start_checkpoint = 'checkpoints/ep027-loss337.100-val_loss319.958.h5'
     start_checkpoint = 'checkpoints/ep048-loss47.578-val_loss53.419.h5'
 
+    print("Will load checkpoint: %s" % (start_checkpoint))
+
     model = create_model(input_shape, anchors, num_classes, freeze_body=2, weights_path=start_checkpoint) # make sure you know what you freeze
 
     logging = TensorBoard(log_dir=log_dir)
