@@ -196,6 +196,7 @@ def detect_video(yolo, video_path, output_path=""):
     curr_fps = 0
     fps = "FPS: ??"
     prev_time = timer()
+    set_size_once = False
     while True:
         return_value, frame = vid.read()
         image = Image.fromarray(frame)
@@ -213,7 +214,11 @@ def detect_video(yolo, video_path, output_path=""):
         cv2.putText(result, text=fps, org=(3, 15), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.50, color=(255, 0, 0), thickness=2)
         cv2.namedWindow("result", cv2.WINDOW_NORMAL)
-        cv2.resizeWindow('result', 800, 600)
+
+        if set_size_once is False:
+            cv2.resizeWindow('result', 1400, 900)
+            set_size_once = True
+
         cv2.imshow("result", result)
         if isOutput:
             out.write(result)
