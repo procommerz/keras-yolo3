@@ -34,9 +34,10 @@ def _main():
     #     model = create_tiny_model(input_shape, anchors, num_classes,
     #         freeze_body=2, weights_path='model_data/tiny_yolo_weights.h5')
     # else:
-    #model = create_model(input_shape, anchors, num_classes, freeze_body=2, weights_path='model_data/yolo.h5') # make sure you know what you freeze
 
-    model = create_model(input_shape, anchors, num_classes, freeze_body=2, weights_path='checkpoints/ep027-loss337.100-val_loss319.958.h5')  # make sure you know what you freeze
+    start_checkpoint = 'model_data/yolo.h5'
+    # start_checkpoint = 'checkpoints/ep027-loss337.100-val_loss319.958.h5'
+    model = create_model(input_shape, anchors, num_classes, freeze_body=2, weights_path=start_checkpoint) # make sure you know what you freeze
 
     logging = TensorBoard(log_dir=log_dir)
     checkpoint = ModelCheckpoint(log_dir + 'ep{epoch:03d}-loss{loss:.3f}-val_loss{val_loss:.3f}.h5',
