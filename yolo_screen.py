@@ -4,9 +4,15 @@ import numpy as np
 from yolo import YOLO, timer
 from functools import reduce
 from PIL import Image
-import pdb
+from pdb import set_trace
+import cv2
+from mss import mss
 from matplotlib.colors import rgb_to_hsv, hsv_to_rgb
-
+from pyqtgraph.Qt import QtCore, QtGui
+from PyQt5.QtCore import pyqtSlot, Qt
+import pyqtgraph as pg
+import math, random, threading, time, os, sys, queue, _thread
+import scipy.misc
 
 FLAGS = None
 
@@ -55,13 +61,54 @@ if __name__ == '__main__':
 
     FLAGS = parser.parse_args()
 
-class NebrusScreenDemo(object):
-    def __init__(self, yolo):
-        self.yolo = yolo
-        pass
+class NebrusScreenDemo(QtGui.QMainWindow):
+    def __init__(self, parent=None):
+        super(NebrusScreenDemo, self).__init__(parent)
 
-    def run(self):
-        pass
+        #### Create Gui Elements ###########
+        self.mainbox = QtGui.QWidget()
+        self.screen_resolution = app.desktop().screenGeometry()
+        kw = 0.4
+        kh = 0.3
+
+        #self.setFixedSize(screen_resolution.width(), int(screen_resolution.height() * 0.936)) # 0.636))
+        self.setFixedSize(int(self.screen_resolution.width() * kh), int(self.screen_resolution.height() * kw))  # 0.636))
+        self.setCentralWidget(self.mainbox)
+        self.mainbox.setLayout(QtGui.QGridLayout())
+
+        # QGridLayout#addWidget(): (QWidget * widget, int fromRow, int fromColumn, int rowSpan, int columnSpan, Qt::Alignment alignment = 0)
+
+        # self.canvas = pg.GraphicsLayoutWidget()
+        # self.mainbox.layout().addWidget(self.canvas, 0, 1, 1, 6) # last param = number of buttons + 1
+
+        self.image_view = pg.ImageView()
+        self.mainbox.layout().addWidget(self.image_view, 0, 0, 1, 1)
+
+        self.image_width = int(self.screen_resolution.width() - self.screen_resolution.width() * kw)
+        self.image_height = int(self.screen_resolution.height() - self.screen_resolution.height() * kh)
+
+        # sct = mss()
+        # # pdb.set_trace() ###
+        # monitor = self.get_mss_monitor()
+        # image = np.array(sct.grab(monitor))
+        # image = np.flip(image[:, :, :3], 2)
+        # image = np.rot90(image, axes=(-2, -1))
+        # self.image_view.setImage(image, xvals=np.linspace(1., 3., image.shape[0]))
+
+        # self.image_view.autoRange()
+
+        self.yolo = YOLO(**vars(FLAGS))
+        self.update()
+
+    def detect_screen(self):
+        sct = mss()
+        # pdb.set_trace() ###
+        monitor = {'top': int(self.screen_resolution.height() * 0.3), 'left': int(self.screen_resolution.width() * kw), 'width': int(self.screen_resolution.width() * self.screen_resolution.width() * kw), 'height': int(self.screen_resolution.height() * self.screen_resolution.height() * kh)}
+        image = np.array(sct.grab(monitor))
+        image = np.flip(image[:, :, :3], 2)
+        frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = Image.fromarray(frame)
+        image.show()
 
     def detect_img(self, yolo):
         while True:
@@ -117,6 +164,58 @@ class NebrusScreenDemo(object):
                 break
         yolo.close_session()
 
+    def get_mss_monitor(self):
+        kw = 0.4
+        kh = 0.3
+
+        monitor = {'top': int(self.screen_resolution.height() * 0.3),
+                   'left': int(self.screen_resolution.width() * kw),
+                   'width': int(self.screen_resolution.width() - self.screen_resolution.width() * kw),
+                   'height': int(self.screen_resolution.height() - self.screen_resolution.height() * kh)}
+
+        return monitor
+
+    def update(self):
+        try:
+            sct = mss()
+            # pdb.set_trace() ###
+            monitor = self.get_mss_monitor()
+
+            image = np.array(sct.grab(monitor))
+            #image = np.flip(image[:, :, :3], 2)
+            #image = np.rot90(image, axes=(-2, -1))
+
+            #frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            #image_ax = Image.fromarray(frame)
+
+            image_ax = Image.fromarray(image)
+            tf_image = self.yolo.detect_image(image_ax)
+            tf_image = scipy.ndimage.rotate(tf_image, 90)
+            tf_image = np.asarray(tf_image)
+            #tf_image = np.flip(tf_image[:, :, :3], 2)
+            tf_image = np.flipud(tf_image)
+            #tf_image = np.rot90(tf_image, axes=(-2, -1))
+            self.image_view.setImage(tf_image)
+            self.image_view.autoRange()
+
+            QtCore.QTimer.singleShot(33, self.update)
+            # self.counter += 1
+        except KeyboardInterrupt:
+            print("Exiting gracefully...")
+            # self.decode_thread.join()
+            # self.filter_thread.join()
+            # self.update_threaad.terminate()
+            # self.multi_pulse_thread.terminate()
+        except BaseException as e:
+            print(e)
+            print("update thread: %s" % (str(e)))
+            raise e
+            QtCore.QTimer.singleShot(1, self.update)
+
+    def keyPressEvent(self, e):
+        print(str(e.key()))
+        if e.key() == Qt.Key_F5:
+            self.close()
 # if FLAGS.image:
 #     """
 #     Image detection mode, disregard any remaining command line arguments
@@ -132,6 +231,10 @@ class NebrusScreenDemo(object):
 
 app = None
 
+main_thread = threading.currentThread()
+
 if __name__ == '__main__':
-    app = NebrusScreenDemo()
-    app.run()
+    app = QtGui.QApplication(sys.argv)
+    thisapp = NebrusScreenDemo()
+    thisapp.show()
+    sys.exit(app.exec_())
