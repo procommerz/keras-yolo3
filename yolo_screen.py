@@ -13,6 +13,10 @@ from PyQt5.QtCore import pyqtSlot, Qt
 import pyqtgraph as pg
 import math, random, threading, time, os, sys, queue, _thread
 import scipy.misc
+import keras
+import tensorflow as tf
+
+print("Script started. Keras: %s, Tensorflow: %s" % (keras.__version__, tf.__version__))
 
 FLAGS = None
 
@@ -97,6 +101,19 @@ class NebrusScreenDemo(QtGui.QMainWindow):
 
         # self.image_view.autoRange()
 
+        # Grab frame
+        self.frame_window = QtGui.QMainWindow()
+        monitor = self.get_mss_monitor()
+        self.frame_window.setFixedSize(monitor["width"], monitor["height"])
+        self.frame_window.move(monitor["left"], monitor["top"])
+        self.move(0, 0)
+        self.frame_window.setWindowOpacity(0.5)
+        self.frame_window.setAttribute(Qt.WA_NoSystemBackground, True)
+
+        self.frame_window.show()
+
+        self.sct = mss()
+        print("Monitor: %s" % (str(self.get_mss_monitor())))
         self.yolo = YOLO(**vars(FLAGS))
         self.update()
 
@@ -167,38 +184,46 @@ class NebrusScreenDemo(QtGui.QMainWindow):
     def get_mss_monitor(self):
         kw = 0.4
         kh = 0.3
+        dpi = 1
 
-        monitor = {'top': int(self.screen_resolution.height() * 0.3),
-                   'left': int(self.screen_resolution.width() * kw),
-                   'width': int(self.screen_resolution.width() - self.screen_resolution.width() * kw),
-                   'height': int(self.screen_resolution.height() - self.screen_resolution.height() * kh)}
+        monitor = {'top': int(self.screen_resolution.height() * dpi * 0.3),
+                   'left': int(self.screen_resolution.width() * dpi * kw),
+                   'width': int(self.screen_resolution.width() * dpi - self.screen_resolution.width() * dpi * kw),
+                   'height': int(self.screen_resolution.height() * dpi - self.screen_resolution.height() * dpi * kh)}
 
         return monitor
 
     def update(self):
         try:
-            sct = mss()
             # pdb.set_trace() ###
             monitor = self.get_mss_monitor()
 
-            image = np.array(sct.grab(monitor))
-            #image = np.flip(image[:, :, :3], 2)
-            #image = np.rot90(image, axes=(-2, -1))
+            image = np.array(self.sct.grab(monitor))
 
             #frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             #image_ax = Image.fromarray(frame)
 
-            image_ax = Image.fromarray(image)
-            tf_image = self.yolo.detect_image(image_ax)
-            tf_image = scipy.ndimage.rotate(tf_image, 90)
-            tf_image = np.asarray(tf_image)
-            #tf_image = np.flip(tf_image[:, :, :3], 2)
-            tf_image = np.flipud(tf_image)
-            #tf_image = np.rot90(tf_image, axes=(-2, -1))
-            self.image_view.setImage(tf_image)
-            self.image_view.autoRange()
+            #image = np.flip(image[:, :, :3], 2)
+            #image = np.fliplr(image)
+            #image = scipy.ndimage.rotate(image, 90)
 
-            QtCore.QTimer.singleShot(33, self.update)
+            frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            image_ax = Image.fromarray(frame)
+#            image_ax = Image.fromarray(image)
+
+            tf_image = self.yolo.detect_image(image_ax)
+
+            tf_image = np.asarray(tf_image)
+            tf_image = np.fliplr(tf_image)
+            tf_image = scipy.ndimage.rotate(tf_image, 90)
+
+            self.image_view.setImage(tf_image)
+
+            # self.image_view.setImage(image)
+
+            # self.image_view.autoRange()
+
+            QtCore.QTimer.singleShot(50, self.update)
             # self.counter += 1
         except KeyboardInterrupt:
             print("Exiting gracefully...")

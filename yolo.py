@@ -24,6 +24,8 @@ class YOLO(object):
     _defaults = {
         "model_path": 'checkpoints/v2/trained_weights_final.h5',
         # "model_path": 'model_data/yolo.h5',
+        #"model_path": 'model_data/yolo-tiny.h5',
+        # "model_path": 'checkpoints/v3/yolo_tiny_final_weights_final.h5',
         "anchors_path": 'model_data/yolo_anchors.txt',
         # "classes_path": 'model_data/coco_classes.txt',
         "classes_path": 'model_data/training-usbase.names',
@@ -48,6 +50,7 @@ class YOLO(object):
 
         config = tf.ConfigProto()
         config.gpu_options.allow_growth = True
+        config.gpu_options.per_process_gpu_memory_fraction = 0.82 # https://github.com/tensorflow/tensorflow/issues/22623#issuecomment-425702729
         self.sess = tf.Session(config=config)
         K.set_session(self.sess)
         # set_trace()
