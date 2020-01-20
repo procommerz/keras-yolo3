@@ -1,5 +1,6 @@
 import os
 import numpy as np
+from pdb import set_trace
 import videotests.object_tracking_test
 import cv2 as cv
 from PIL import Image, ImageFont, ImageDraw
@@ -225,16 +226,17 @@ class ThyroidTest(videotests.object_tracking_test.ObjectTrackingTest):
         win_sizes = dict()
         prev_shape = None
 
+        displayed_feature_window_count = 0
+        prev_offset = [0, 0]
+
         for class_name in self.track_classes:
             winname = '%s_0' % class_name
-            displayed_window_count = 0
-            prev_offset = [0, 0]
 
             if class_name in self.current_detected_objects:
                 offset = [main_size[0], 0]
 
-                if displayed_window_count > 1:
-                    offset[1] = prev_offset[1] + prev_shape[0]
+                if displayed_feature_window_count >= 1:
+                    offset[1] = prev_offset[1] + prev_shape[0] + 50
 
                 prev_offset = offset
 
@@ -245,6 +247,6 @@ class ThyroidTest(videotests.object_tracking_test.ObjectTrackingTest):
 
                 prev_shape = self.current_detected_objects[class_name][0].shape
 
-                displayed_window_count += 1
+                displayed_feature_window_count += 1
 
         self.window_layout_needs_update = False
