@@ -12,7 +12,6 @@ from matplotlib.widgets import TextBox
 from matplotlib.widgets import CheckButtons
 import pdb
 from pdb import set_trace
-from serial import Serial
 # import pty
 # from tkinter import *
 import math, random, threading, time, os, sys, queue, _thread
@@ -26,6 +25,9 @@ from threading import Thread
 import struct
 import array
 
+import platform
+import serial
+
 # def set_qt_trace():
 #     QtCore.pyqtRemoveInputHook()
 #     set_trace()
@@ -33,11 +35,10 @@ import array
 # suppresses the use of scientific notation for small numbers when printing np.array
 np.set_printoptions(suppress=True)
 
-#default_usb_port = "/dev/cu.usbmodem7913201"
-default_usb_port = "COM3"
-
-SIGNAL_KEY = 'data'
-ECHO_KEY = 'data2'
+if platform.system() == "Darwin":
+    default_usb_port = "/dev/cu.usbmodem7913201"
+else:
+    default_usb_port = "COM3"
 
 # baudrate = 46080004
 baudrate = 2000000
@@ -155,7 +156,7 @@ class App(QtGui.QMainWindow):
 
 
     def init_serial(self):
-        self.serial = Serial(default_usb_port, baudrate=baudrate)
+        self.serial = serial.Serial(default_usb_port, baudrate=baudrate)
         self.serial_thread = ReadSerialThread(self)
         self.serial_thread.start()
 
