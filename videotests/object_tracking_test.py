@@ -194,6 +194,8 @@ class ObjectTrackingTest(object):
 
         self.current_detected_objects.clear()
 
+        box_padding = (70, 70)
+
         for i, c in reversed(list(enumerate(out_classes))):
             predicted_class = self.box_detection_class_names[c]
             box = out_boxes[i]
@@ -215,7 +217,12 @@ class ObjectTrackingTest(object):
             if predicted_class not in self.current_detected_objects:
                 self.current_detected_objects[predicted_class] = list()
 
-            self.current_detected_objects[predicted_class].append(frame[top:bottom,left:right])
+            padded_top = np.max([top - box_padding[0], 0])
+            padded_bottom = np.min([bottom + box_padding[0], frame.shape[0] - 1])
+            padded_left = np.max([left - box_padding[1], 0])
+            padded_right = np.min([right + box_padding[1], frame.shape[1] - 1])
+
+            self.current_detected_objects[predicted_class].append(frame[padded_top:padded_bottom,padded_left:padded_right])
 
             if top - label_size[1] >= 0:
                 text_origin = np.array([left, top - label_size[1]])
