@@ -1,4 +1,5 @@
 #include <Wire.h>
+#include <EEPROM.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_L3GD20_U.h>
 
@@ -11,6 +12,7 @@ int trailingAccX1, trailingAccX2, trailingAccX3; // X3 - max X, X2 - min X
 int trailingAccY1, trailingAccY2, trailingAccY3;
 int trailingAccZ1, trailingAccZ2, trailingAccZ3;
 
+int timesCalibrated = 0;
 int timesCalibratedTotal = 0;
 int timesCalibratedSinceOn = 0;
 

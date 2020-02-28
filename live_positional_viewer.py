@@ -38,7 +38,7 @@ np.set_printoptions(suppress=True)
 if platform.system() == "Darwin":
     default_usb_port = "/dev/cu.usbmodem7913201"
 else:
-    default_usb_port = "COM3"
+    default_usb_port = "COM5"
 
 # baudrate = 46080004
 baudrate = 2000000
