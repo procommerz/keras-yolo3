@@ -22,6 +22,7 @@ Adafruit_L3GD20_Unified gyro = Adafruit_L3GD20_Unified(20);
 void setup(void) 
 {
   Serial.begin(115200);
+  delay(1500);
   Serial.println("Gyroscope Test"); Serial.println("");
   
   /* Enable auto-ranging */
@@ -32,7 +33,10 @@ void setup(void)
   {
     /* There was a problem detecting the L3GD20 ... check your connections */
     Serial.println("Ooops, no L3GD20 detected ... Check your wiring!");
-    while(1);
+    
+    while(1) {
+      Serial.println("Ooops, no L3GD20 detected ... Check your wiring!");;
+    }
   }
   
   /* Display some basic information on this sensor */
