@@ -247,7 +247,7 @@ class ThyroidTest(videotests.object_tracking_test.ObjectTrackingTest):
         image_gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
         ret, thresh = cv.threshold(image_gray, 127, 255, 0)
         contours, hierarchy = cv.findContours(thresh, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
-        set_trace()
+        # set_trace()
         cv.drawContours(image, contours, -1, (0,255,0), 3)
 
     def convert_frame_to_qt_image(self, img):
