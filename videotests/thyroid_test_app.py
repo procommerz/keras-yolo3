@@ -34,10 +34,9 @@ class ThyroidTestApp(QMainWindow):
 
         self.qt_main = QtGui.QWidget()
 
-        self.move(150, 150)
-
         screen_resolution = app.desktop().screenGeometry()
-        #self.setFixedSize(screen_resolution.width(), int(screen_resolution.height() * 0.936)) # 0.636))
+        #self.move(150, 150)
+        self.setFixedSize(screen_resolution.width(), int(screen_resolution.height() * 0.936)) # 0.636))
         self.setCentralWidget(self.qt_main)
         self.qt_main.setLayout(QHBoxLayout())
 
