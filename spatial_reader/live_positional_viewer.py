@@ -36,7 +36,9 @@ import serial
 np.set_printoptions(suppress=True)
 
 if platform.system() == "Darwin":
-    default_usb_port = "/dev/cu.usbmodem7913201"
+    default_usb_port = "/dev/cu.SLAB_USBtoUART"  # esp32
+    # default_usb_port = "/dev/cu.usbmodem7913201" # teensy 3.2
+    # default_usb_port = "/dev/cu.usbmodem61079701"  # teensy 4.0
 else:
     default_usb_port = "COM5"
 
@@ -230,7 +232,7 @@ class App(QtGui.QMainWindow):
             # self.update_process.terminate()
             # self.multi_pulse_process.terminate()
         except BaseException as e:
-            print("update thread: %s" % str(e))
+            # print("update thread: %s" % str(e))
             QtCore.QTimer.singleShot(1, self.update)
 
     def update_slower(self):
@@ -273,6 +275,7 @@ class ReadSerialThread(Thread):
                 print(str(e))
 
             try:
+                set_trace()
                 line = self.app.serial.readline()
 
                 if len(line) >= 26:

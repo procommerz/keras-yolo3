@@ -23,7 +23,7 @@ void setup(void)
 {
   Serial.begin(115200);
   delay(1500);
-  Serial.println("Gyroscope Test"); Serial.println("");
+  Serial.println("Gyroscope Test"); Serial.println("Initializing L3GD20 SPI"); Serial.println("");
   
   /* Enable auto-ranging */
   gyro.enableAutoRange(true);
@@ -37,6 +37,8 @@ void setup(void)
     while(1) {
       Serial.println("Ooops, no L3GD20 detected ... Check your wiring!");;
     }
+  } else {
+    Serial.println("SPI Gyro found"); 
   }
   
   /* Display some basic information on this sensor */

@@ -1,0 +1,1 @@
+CMakeLists.txt not found in /Users/denis/src/io.ultrasound.yolov3tfkr/arduino/sketches/esp32_gyro_accel_motor
