@@ -1,0 +1,3 @@
+/mnt/f/src/io.ultrasound.yolov3tfkr/arduino/sketches/esp32_gyro_accel_motor/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/mnt/f/src/io.ultrasound.yolov3tfkr/arduino/sketches/esp32_gyro_accel_motor/cmake-build-debug/CMakeFiles/esp32_gyro_accel_motor.dir
+/mnt/f/src/io.ultrasound.yolov3tfkr/arduino/sketches/esp32_gyro_accel_motor/cmake-build-debug/CMakeFiles/edit_cache.dir

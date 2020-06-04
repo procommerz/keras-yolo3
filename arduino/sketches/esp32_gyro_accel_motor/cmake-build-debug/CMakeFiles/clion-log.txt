@@ -1,1 +1,6 @@
-CMakeLists.txt not found in /Users/denis/src/io.ultrasound.yolov3tfkr/arduino/sketches/esp32_gyro_accel_motor
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /mnt/f/src/io.ultrasound.yolov3tfkr/arduino/sketches/esp32_gyro_accel_motor
+-- Configuring done
+CMake Error: CMake can not determine linker language for target: esp32_gyro_accel_motor
+CMake Error: Cannot determine link language for target "esp32_gyro_accel_motor".
+-- Generating done
+-- Build files have been written to: /mnt/f/src/io.ultrasound.yolov3tfkr/arduino/sketches/esp32_gyro_accel_motor/cmake-build-debug

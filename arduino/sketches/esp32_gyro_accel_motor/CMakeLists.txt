@@ -1,0 +1,2 @@
+PROJECT(esp32_gyro_accel_motor C)
+add_executable(esp32_gyro_accel_motor esp32_gyro_accel_motor.ino)

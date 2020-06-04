@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="esp32_gyro_accel_motor" targetName="esp32_gyro_accel_motor" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fd9da487-2797-4a7c-a316-837169c22d43" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+      </list>
+    </option>
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="uywYJEPo" />
+  </component>
+  <component name="ProjectId" id="1cm6suaet8c155WogHkD0v5iSgI" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/libraries/MPU6050" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\src\io.ultrasound.yolov3tfkr\arduino\sketches\esp32_gyro_accel_motor\libraries\MPU6050" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="esp32_gyro_accel_motor" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="esp32_gyro_accel_motor" TARGET_NAME="esp32_gyro_accel_motor" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="esp32_gyro_accel_motor" RUN_TARGET_NAME="esp32_gyro_accel_motor">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="538" y="280" key="FileChooserDialogImpl" timestamp="1591130429843">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="538" y="280" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1591130429843" />
+    <state x="726" y="245" width="613" height="536" key="find.popup" timestamp="1591251050654">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="726" y="245" width="613" height="536" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1591251050654" />
+  </component>
+</project>
