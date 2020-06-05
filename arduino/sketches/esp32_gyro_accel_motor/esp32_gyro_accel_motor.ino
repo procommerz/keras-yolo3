@@ -202,11 +202,11 @@ bool CollectGyroAndAccelData() {
         mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
         Serial.print("X: ");
         Serial.print(gravity.x);
-        Serial.print("Y: ");
+        Serial.print(" Y: ");
         Serial.print(gravity.y);
-        Serial.print("Z: ");
+        Serial.print(" Z: ");
         Serial.print(gravity.z);
-        Serial.print(" YAW: ");
+        Serial.print(" | YAW: ");
         Serial.print(ypr[0] * 180 / M_PI);
         Serial.print(" PITCH: ");
         Serial.print(ypr[1] * 180 / M_PI);
